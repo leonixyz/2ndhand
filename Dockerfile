@@ -21,9 +21,11 @@ ADD ./conf/supervisord-postgresql.conf /etc/supervisor/conf.d/supervisord-postgr
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 php postgresql supervisor pwgen libapache2-mod-php
 
-# Correct the Error: could not open temporary statistics file "/var/run/postgresql/9.5-main.pg_stat_tmp/global.tmp": No such file or directory
+# PostgreSQL needs this directory to store statistics
 RUN mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp
 RUN chown postgres:postgres /var/run/postgresql/9.5-main.pg_stat_tmp -R
 
+# Apache will listen on port 80
 EXPOSE 80
+
 CMD ["/bin/bash", "/entrypoint.sh"]
