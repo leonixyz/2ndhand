@@ -19,10 +19,14 @@ then
 		alter role www with login;"
 	su postgres -c psql <<< "$PG_INIT_CMD"
 
-	# Save data for disaster recovery
-	echo "PostgreSQL:" 			>> /root/postgresql-www-data.yml
-	echo "  User: www" 			>> /root/postgresql-www-data.yml
-	echo "  Pass: $PG_USER_PW" 	>> /root/postgresql-www-data.yml
+	# Save database data
+	echo "<?php" 						>> /var/www/postgresql-www-data.php
+	echo '$DBCONFIG = array(' 			>> /var/www/postgresql-www-data.php
+	echo "  'HOST' => 'localhost'," 	>> /var/www/postgresql-www-data.php
+	echo "  'NAME' => 'www'," 			>> /var/www/postgresql-www-data.php
+	echo "  'USER' => 'www'," 			>> /var/www/postgresql-www-data.php
+	echo "  'PASS' => '$PG_USER_PW'," 	>> /var/www/postgresql-www-data.php
+	echo ");" 							>> /var/www/postgresql-www-data.php
 fi
 
 # Start supervisor

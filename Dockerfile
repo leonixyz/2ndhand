@@ -16,10 +16,13 @@ ENV APACHE_LOCK_DIR /var/lock/
 ADD ./entrypoint.sh /entrypoint.sh
 ADD ./conf/supervisord-apache.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD ./conf/supervisord-postgresql.conf /etc/supervisor/conf.d/supervisord-postgresql.conf
+ADD https://github.com/vrana/adminer/releases/download/v4.3.0/adminer-4.3.0-en.php /var/www/html/adminer.php
 
 # Install packages
 RUN apt-get update && \
-	DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 php postgresql supervisor pwgen libapache2-mod-php
+	DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 php postgresql supervisor pwgen libapache2-mod-php php7.0-pgsql && \
+	sed -i "s/^display_errors = Off$/display_errors = On/" /etc/php/7.0/apache2/php.ini && \
+	sed -i "s/^display_startup_errors = Off$/display_startup_errors = On/" /etc/php/7.0/apache2/php.ini
 
 # PostgreSQL needs this directory to store statistics
 RUN mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp
