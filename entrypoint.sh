@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if [ ! -f /root/postgresql-www-data.yml ]
+if [ ! -f /var/www/postgresql-www-data.php ]
 then
 	# This is the first time the container has been started
 	echo "Configuring container..."
