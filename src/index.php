@@ -1,4 +1,4 @@
-<?php include('../postgresql-www-data.php'); ?>
+<?php include('app/init.php'); ?>
 <!doctype html>
 <html>
 	<head>
@@ -6,16 +6,13 @@
 		<title>Hello World!</title>
 	</head>
 	<body>
+		<h1>This is a test for the DB Class: listing all databases</h1>
 		<?php
-
-			// test db connection by listing all tables
-			$db = new PDO("pgsql:host={$DBCONFIG['HOST']};dbname={$DBCONFIG['NAME']}", $DBCONFIG['USER'], $DBCONFIG['PASS']);
-			$stmt = $db->query('SELECT * FROM pg_catalog.pg_tables');
-			$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			
-			// print results
 			echo "<pre>";
-			var_dump($res);
+			$db = new _2ndhand\DB();
+			$res = $db->fetch('pg_catalog.pg_database');
+			//$res = $db->tableExists('pg_catalog.pg_database');
+			print_r($res);
 			echo "</pre>";
 
 			// print php general info
