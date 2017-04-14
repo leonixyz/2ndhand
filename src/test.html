@@ -30,7 +30,6 @@
 				background: rgba(133,175,75,1);
 			}
 
-
 			.main-header a, .main-footer a {
 				color:white;
 				text-decoration: none;
@@ -91,9 +90,34 @@
 				background-repeat: no-repeat;
 			}
 
-			div.stretchy-wrapper, main, footer.main-footer {
+			main, footer.main-footer {
 				position:relative;
 				top:6.5em;
+			}
+
+			.product img {
+			    -webkit-transition: all .3s ease; /* Safari and Chrome */
+			  	-moz-transition: all .3s ease; /* Firefox */
+			  	-o-transition: all .3s ease; /* IE 9 */
+			  	-ms-transition: all .3s ease; /* Opera */
+			  	transition: all .3s ease;
+				-webkit-filter: brightness(1.10) grayscale(100%) contrast(90%);
+				-moz-filter: brightness(1.10) grayscale(100%) contrast(90%);
+				filter: brightness(1.10) grayscale(100%); 
+
+			}
+
+			.product img:hover {
+			    -webkit-backface-visibility: hidden;
+			    backface-visibility: hidden;
+			    -webkit-transform:translateZ(0) scale(1.20); /* Safari and Chrome */
+			    -moz-transform:scale(1.10); /* Firefox */
+			    -ms-transform:scale(1.10); /* IE 9 */
+			    -o-transform:translatZ(0) scale(1.10); /* Opera */
+			    transform:translatZ(0) scale(1.10);
+				-webkit-filter: brightness(1.10) grayscale(0%) contrast(90%);
+				-moz-filter: brightness(1.10) grayscale(0%) contrast(90%);
+				filter: brightness(1.10) grayscale(0%); 
 			}
 		</style>
 	</head>
@@ -122,12 +146,12 @@
 			  </div>
 			</nav>
 		</header>
-		<div class="stretchy-wrapper">
-			<div class="hero"></div>
-		</div>
 
 
-		<main id="main-products">
+		<main id="main-home">
+			<div class="stretchy-wrapper">
+				<div class="hero"></div>
+			</div>
 			<div class="container">
 				<div class="showcase row">
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
