@@ -1,7 +1,5 @@
 <?php
 
-namespace _2ndhand;
-
 /*
  * This class is used as interface to the database. It wraps a PDO object
  * https://secure.php.net/manual/en/intro.pdo.php
@@ -47,7 +45,7 @@ class DB {
 	/*
 	 * Fetches a table and returns its content as an array of objects
 	 */
-	public function fetch(string $tableName, array $columns = array(), array $params = array()) {
+	public function fetch(string $tableName, array $params = array(), array $columns = array()) {
 		$this->checkPDO();
 
 		static::checkTableName($tableName);

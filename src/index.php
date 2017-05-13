@@ -9,7 +9,7 @@
 		<h1>This is a test for the DB Class: listing all databases</h1>
 		<?php
 			echo "<pre>";
-			$db = new _2ndhand\DB();
+			$db = new DB();
 			$res = $db->fetch('pg_catalog.pg_database');
 			//$res = $db->tableExists('pg_catalog.pg_database');
 			print_r($res);
