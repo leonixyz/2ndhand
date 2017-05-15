@@ -99,6 +99,8 @@
 
 			div.stretchy-wrapper {
 		    	padding-bottom: 56.25%;
+		    	position:relative;
+		    	top:6.5em;
 			}
 
 			div.stretchy-wrapper > div {
@@ -112,9 +114,16 @@
 				background-repeat: no-repeat;
 			}
 
-			main, footer.main-footer {
+			main {
 				position:relative;
 				top:6.5em;
+				padding-bottom:3em;
+				padding-top:1em;
+			}
+
+			footer.main-footer {
+				position:relative;
+				top:91px;
 			}
 
 			.product img {
@@ -478,6 +487,7 @@
 				$scope.about = false;
 
 				$scope.showSubpage = function(pageName) {
+					$(".navbar-collapse").collapse('hide');
 					switch(pageName) {
 						case "hero":
 							$scope.showcase = false;
