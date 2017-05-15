@@ -1,8 +1,10 @@
 <!doctype html>
-<html>
+<html ng-app="eshop">
 	<head>
 		<meta charset="utf-8">
 		<title>Hello World!</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -15,6 +17,10 @@
 				font-family: 'Maven Pro', sans-serif;
 				color:#4b622b;
 				min-width: 280px;
+			}
+
+			.link {
+				cursor: pointer;
 			}
 
 			.main-header {
@@ -42,7 +48,6 @@
 				text-decoration: none;
 			}
 
-
 			.logo {
 				position: absolute;
 			}
@@ -68,6 +73,15 @@
 			.nav > li > a:focus, .nav > li > a:hover, .social:hover  {
 				background:transparent;
 				color:#4b622b;
+			}
+
+			#myNavbar {
+				-webkit-box-shadow:none;
+				box-shadow: none;
+			}
+
+			.navbar-nav {
+				margin-right:0;
 			}
 
 			.social {
@@ -127,9 +141,19 @@
 				-moz-filter: brightness(1.10) grayscale(0%) contrast(90%);
 				filter: brightness(1.10) grayscale(0%); 
 			}
+
+			.animate-show-hide.ng-hide {
+				opacity:0;
+			}
+
+			.animate-show-hide.ng-hide-add,
+			.animate-show-hide.ng-hide-remove {
+				transition: all linear 0.5s;
+			}
 		</style>
 	</head>
-	<body>
+	<body ng-controller="secondhand">
+
 		<header class="main-header">
 			<nav class="navbar container">
 			  <div class="container-fluid">
@@ -139,126 +163,126 @@
 			        <span class="icon-bar u-bg-white"></span>
 			        <span class="icon-bar u-bg-white"></span>                        
 			      </button>
-			      <a href="/" class="logo">
+			      <a ng-click="showSubpage('hero')" class="logo link">
 					<img src="img/2ndhand-64.png">
 					<span class="hidden-xs"> 2<sup>nd</sup> hand</span>
 			      </a>
 			    </div>
-			    <div class="collapse navbar-collapse" id="myNavbar">
+			    <div class="collapse navbar-collapse text-right" id="myNavbar">
 			      <ul class="nav navbar-nav navbar-right">
-			        <li><a href="#"><span class="glyphicon glyphicon-home"></span> Shop</a></li>
-			        <li><a href="#"><span class="fa fa-shopping-bag"></span> Checkout</a></li>
-			        <li><a href="#"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+			        <li><a ng-click="showSubpage('showcase')" class="link">Shop <span class="glyphicon glyphicon-home"></span></a></li>
+			        <li><a ng-click="showSubpage('cart')" class="link">Checkout <span class="fa fa-shopping-bag"></span></a></li>
+			        <li><a ng-click="showSubpage('about')" class="link"></span>About <span class="glyphicon glyphicon-info-sign"></a></li>
 			      </ul>
 			    </div>
 			  </div>
 			</nav>
 		</header>
 
+		<div class="stretchy-wrapper" ng-show="hero" class="animate-show-hide">
+			<div class="hero"></div>
+		</div>
 
-		<main id="main-home">
-			<div class="stretchy-wrapper">
-				<div class="hero"></div>
-			</div>
+		<main id="main-home" ng-show="showcase" class="animate-show-hide">
 			<div class="container">
 				<div class="showcase row">
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/1">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/2">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/3">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/4">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/5">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/6">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/7">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/8">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/9">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/10">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/1">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/2">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/3">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/4">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/5">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/6">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/7">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/8">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/9">
 						</a>
 					</section>
 					<section class="product col col-xs-12 col-sm-6 col-md-4 col-lg-3">
-						<a href="#">
+						<a ng-click="showSubpage('details')" class="link">
 							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/10">
 						</a>
 					</section>
@@ -273,7 +297,7 @@
 		<!-- Product details-->
 
 
-		<main id="main-details" >
+		<main id="main-details" ng-show="details" class="animate-show-hide">
 			<div class="container">
 			<div class="row">
 				<h2>Product details</h2>
@@ -303,7 +327,7 @@
 
 		<!-- Beginning of payment section-->
 
-		<main id="payment-details">
+		<main id="payment-details" ng-show="cart" class="animate-show-hide">
 
 			<div class="container">
 			 <h2>Shipping information</h2>
@@ -422,7 +446,19 @@
 			</div>
 		</main>
 
+		<!-- Beginning of about section-->
 
+		<main id="about" ng-show="about" class="animate-show-hide">
+
+			<div class="container">
+				<h2>About</h2>
+				<p>
+					Lorem ipsum dolor sit amet, duo no oratio malorum, aeque volumus referrentur per in, ad vix commune patrioque abhorreant. Ne pri senserit concludaturque, ei sale mollis voluptatibus ius, ut prima sonet sed. His nobis feugiat ei, mel clita mentitum ex, an partem placerat repudiandae duo. Eos an prompta lucilius, et pro albucius argumentum delicatissimi.
+				</p>
+			</div>
+		</main>
+
+		<!-- Beginning of footer section-->
 
 		<footer class="main-footer">
 			<div class="text-center">
@@ -435,5 +471,61 @@
 				<a href="#"><span class="social fa fa-youtube-square"></span></a>
 			</div>
 		</footer>
+
+		<script>
+			var app = angular.module('eshop', ['ngAnimate']);
+			app.controller('secondhand', function($scope) {
+				$scope.hero = true;
+				$scope.showcase = false;
+				$scope.cart = false;
+				$scope.details = false;
+				$scope.about = false;
+
+				$scope.showSubpage = function(pageName) {
+					switch(pageName) {
+						case "hero":
+							$scope.showcase = false;
+							$scope.cart = false;
+							$scope.details = false;
+							$scope.about = false;
+							$scope.hero = true;
+							break;
+							
+						case "showcase":
+							$scope.hero = false;
+							$scope.cart = false;
+							$scope.details = false;
+							$scope.about = false;
+							$scope.showcase = true;
+							break;
+							
+						case "cart":
+							$scope.hero = false;
+							$scope.showcase = false;
+							$scope.details = false;
+							$scope.about = false;
+							$scope.cart = true;
+							break;
+							
+						case "details":
+							$scope.hero = false;
+							$scope.showcase = false;
+							$scope.cart = false;
+							$scope.about = false;
+							$scope.details = true;
+							break;
+							
+						case "about":
+							$scope.hero = false;
+							$scope.showcase = false;
+							$scope.cart = false;
+							$scope.details = false;
+							$scope.about = true;
+							break;
+					}
+				};
+			});
+		</script>
+
 	</body>
 </html>
