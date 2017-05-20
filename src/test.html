@@ -232,8 +232,15 @@
 		<!-- Showcase -->
 		<main id="main-home" ng-show="showShowcase" class="animate-show-hide">
 			<div class="container">
-				<div class="showcase row">
-					<section ng-repeat="product in products" class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
+				<div class="alert alert-warning" ng-show="products.length == 0">
+					<p>
+						<i class="glyphicon glyphicon-info-sign"></i>
+						It seems there aren't any items left in this shop...
+					</p>
+				</div>
+
+				<div class="showcase row" ng-show="products.length > 0">
+					<section ng-repeat="product in products | availableInStock" class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
 						<a ng-click="showSubpage('details', product)" class="link">
 							<img class="product-preview" ng-src="{{product.Image}}">
 						</a>
@@ -273,47 +280,47 @@
 				<h1>Shopping Cart</h1>
 
 				<!-- Empty cart -->
-				<div ng-show="!cart.length" class="alert alert-info">
+				<div id="empty-cart-info-message" ng-show="!cart.length" class="alert alert-info">
 					<i class="glyphicon glyphicon-info-sign"></i>
 					Your cart is empty
 				</div>
 
 				<!-- Not-empty cart -->
-				<ul class="list-group">
+				<div ng-show="cart.length > 0">
+					<ul class="list-group">
+						<li ng-repeat="cartItem in cart" class="list-group-item">
+							<a class="link" onclick="toggleCartItemDetails(this.parentNode)">
+								<i class="glyphicon glyphicon-menu-down"></i>
+								<strong>{{cartItem.item.Name}}</strong>
+							</a>
+							<span class="badge">{{cartItem.amount}}</span>
 
-					<li ng-repeat="cartItem in cart" class="list-group-item">
-						<a href="#" onclick="toggleCartItemDetails(this.parentNode)">
-							<i class="glyphicon glyphicon-menu-down"></i>
-							<strong>{{cartItem.item.Name}}</strong>
-						</a>
-						<span class="badge">{{cartItem.amount}}</span>
-
-						<div class="cart-item-details hidden row">
-							<div class="col-xs-6">
-								<img ng-src="{{cartItem.item.Image}}" class="product-image">
-							</div>
-							<div class="col-xs-6">
-								<div class="row">
-									<div class="col-xs-12 text-right">
-										amount<br>
-										<input type="number" class="form-control item-amount-control" min="0" max="10" value="{{cartItem.amount}}">
-									</div>
-									<div class="col-xs-12 text-right">
-										<br>
-										subtotal<br>
-										<strong>{{cartItem.amount * cartItem.item.Price}} &euro;</strong>
+							<div class="cart-item-details hidden row">
+								<div class="col-xs-6">
+									<img ng-src="{{cartItem.item.Image}}" class="product-image">
+								</div>
+								<div class="col-xs-6">
+									<div class="row">
+										<div class="col-xs-12 text-right">
+											amount<br>
+											<button class="btn btn-default btn-xs custom_button" ng-click="changeAmount(cartItem, 1)" ng-disabled="cartItem.item.Quantity == 0"><i class="glyphicon glyphicon-plus"></i></button>
+											{{cartItem.amount}}
+											<button class="btn btn-default btn-xs custom_button" ng-click="changeAmount(cartItem, -1)" ng-disabled="cartItem.amount == 0"><i class="glyphicon glyphicon-minus"></i></button>
+										</div>
+										<div class="col-xs-12 text-right">
+											<br>
+											subtotal<br>
+											<strong>{{cartItem.amount * cartItem.item.Price}} &euro;</strong>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</li>
-
-
-
-
-				</ul>
-				<button ng-click="gotoCheckout()" class="btn btn-default btn-primary custom_button">Checkout</button>
-				<button ng-click="emptyCart()" class="btn btn-default btn-danger">Empty Cart</button>
+						</li>
+					</ul>
+					<h2>Grand Total: {{grandTotal}} &euro;</h2>
+					<button ng-click="gotoCheckout()" class="btn btn-default btn-primary custom_button">Checkout</button>
+					<button ng-click="emptyCart()" class="btn btn-default btn-danger">Empty Cart</button>
+				</div>
 			</div>
 		</main>
 
@@ -527,6 +534,7 @@
 				$scope.showAbout = false;
 
 				// get list of products
+				$scope.products = [];
 				$http.get('/api/products')
 					.then(function(res){
 						$scope.products = res.data;                
@@ -538,27 +546,65 @@
 				// define cart
 				$scope.cart = [];
 
+				// define grand total
+				$scope.grandTotal = 0;
+				$scope.updateGrandTotal = function() {
+					total = 0;
+					$scope.cart.forEach(function(cartItem){
+						total += cartItem.amount * cartItem.item.Price;
+					});
+					$scope.grandTotal = total;
+				};
+
 				// add an item to the cart
 				$scope.addToCart = function(item) {
-					//TODO
-					$scope.cart.push({"amount":1, "item": item});
+					var inCart = false;
+					$scope.cart.forEach(function(cartItem) {
+						if(cartItem.item.Id == item.Id) {
+							inCart = true;
+							cartItem.amount++;
+						}
+					});
+					if(!inCart) {
+						$scope.cart.push(
+							{
+								"amount" : 1,
+								"item" : item
+							});
+					}
+					item.Quantity--;
+					$scope.updateGrandTotal();
+					$scope.showSubpage('showcase');
 				}
 
 				// checkout
-				$scope.gotoCheckout = function(item) {
+				$scope.gotoCheckout = function() {
 					$scope.showSubpage('checkout');
 				}
 
-				// add an item to the cart
-				$scope.emptyCart = function(item) {
+				$scope.changeAmount = function(cartItem, delta) {
+					cartItem.item.Quantity -= delta;
+					cartItem.amount += delta;
+					if(cartItem.amount == 0) {
+						$scope.cart.splice($scope.cart.indexOf(cartItem), 1);
+					}
+					$scope.updateGrandTotal();
+				}
+
+				// empty cart
+				$scope.emptyCart = function() {
+					$scope.cart.forEach(function(cartItem) {
+						cartItem.item.Quantity += cartItem.amount;
+					});
 					$scope.cart = [];
+					$scope.updateGrandTotal();
 				}
 
 				// show/hide page sections based on user actions
 				$scope.showSubpage = function(pageName, parameter=null) {
 					$(".navbar-collapse").collapse('hide');
 					switch(pageName) {
-						case "showHero":
+						case "hero":
 							$scope.showShowcase = false;
 							$scope.showCart = false;
 							$scope.showCheckout = false;
@@ -613,6 +659,18 @@
 							$scope.showCheckout = true;
 							break;
 					}
+				};
+			});
+
+			app.filter('availableInStock', function() {
+				return function(items) {
+					var filtered = [];
+					angular.forEach(items, function(item) {
+						if(item.Quantity > 0) {
+							filtered.push(item);
+						}
+					});
+					return filtered;
 				};
 			});
 		</script>

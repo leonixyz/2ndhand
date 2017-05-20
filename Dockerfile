@@ -22,6 +22,7 @@ RUN apt-get update && \
 	a2enmod rewrite
 
 # Add files into container
+ADD ./init.sql /init.sql
 ADD ./entrypoint.sh /entrypoint.sh
 ADD ./conf/supervisord-apache.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 ADD ./conf/supervisord-postgresql.conf /etc/supervisor/conf.d/supervisord-postgresql.conf

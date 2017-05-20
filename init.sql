@@ -1,16 +1,16 @@
 -- Adminer 4.3.0 PostgreSQL dump
 
-\connect "www";
-
 DROP TABLE IF EXISTS "products";
+
+DROP SEQUENCE IF EXISTS "products_Id_seq";
 CREATE SEQUENCE "products_Id_seq" INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1 CACHE 1;
 
-CREATE TABLE "public"."products" (
+CREATE TABLE "products" (
     "Id" integer DEFAULT nextval('"products_Id_seq"'),
     "Name" character varying(256),
     "Description" character varying(4096),
     "Quantity" integer,
-    "Image" character varying(512) DEFAULT ,
+    "Image" character varying(512),
     "Price" real DEFAULT 0
 ) WITH (oids = false);
 
