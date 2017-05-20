@@ -112,6 +112,11 @@
 				max-width: 100%;
 			}
 
+			.item-amount-control {
+				float: right;
+				max-width: 100px;
+			}
+
 			div.stretchy-wrapper {
 		    	padding-bottom: 56.25%;
 		    	position:relative;
@@ -219,13 +224,13 @@
 
 
 		<!-- Hero banner -->
-		<div class="stretchy-wrapper" ng-show="hero" class="animate-show-hide">
+		<div class="stretchy-wrapper" ng-show="showHero" class="animate-show-hide">
 			<div class="hero"></div>
 		</div>
 
 
 		<!-- Showcase -->
-		<main id="main-home" ng-show="showcase" class="animate-show-hide">
+		<main id="main-home" ng-show="showShowcase" class="animate-show-hide">
 			<div class="container">
 				<div class="showcase row">
 					<section ng-repeat="product in products" class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
@@ -239,7 +244,7 @@
 
 
 		<!-- Product details-->
-		<main id="main-details" ng-show="details" class="animate-show-hide">
+		<main id="main-details" ng-show="showDetails" class="animate-show-hide">
 			<div class="container">
 				<div class="row">			 
 					<div class="col-xs-12">
@@ -263,25 +268,42 @@
 
 
 		<!-- Cart section-->
-		<main id="cart" ng-show="cart" class="animate-show-hide">
+		<main id="cart" ng-show="showCart" class="animate-show-hide">
 			<div class="container">
 				<h1>Shopping Cart</h1>
-				<ol class="list-group">
-					<li class="list-group-item">
+
+				<!-- Empty cart -->
+				<div ng-show="!cart.length" class="alert alert-info">
+					<i class="glyphicon glyphicon-info-sign"></i>
+					Your cart is empty
+				</div>
+
+				<!-- Not-empty cart -->
+				<ul class="list-group">
+
+					<li ng-repeat="cartItem in cart" class="list-group-item">
 						<a href="#" onclick="toggleCartItemDetails(this.parentNode)">
 							<i class="glyphicon glyphicon-menu-down"></i>
-							<strong>Item name</strong>
+							<strong>{{cartItem.item.Name}}</strong>
 						</a>
-						<span class="badge">123</span>
+						<span class="badge">{{cartItem.amount}}</span>
 
 						<div class="cart-item-details hidden row">
-							<div class="col-sm-10">
-								<p>
-									Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-								</p>
+							<div class="col-xs-6">
+								<img ng-src="{{cartItem.item.Image}}" class="product-image">
 							</div>
-							<div class="col-sm-2">
-								<input type="number" class="form-control" min="0" max="10" value="1">
+							<div class="col-xs-6">
+								<div class="row">
+									<div class="col-xs-12 text-right">
+										amount<br>
+										<input type="number" class="form-control item-amount-control" min="0" max="10" value="{{cartItem.amount}}">
+									</div>
+									<div class="col-xs-12 text-right">
+										<br>
+										subtotal<br>
+										<strong>{{cartItem.amount * cartItem.item.Price}} &euro;</strong>
+									</div>
+								</div>
 							</div>
 						</div>
 					</li>
@@ -289,15 +311,15 @@
 
 
 
-				</ol>
-				<button ng-click="checkout()" class="btn btn-default btn-primary custom_button">Checkout</button>
+				</ul>
+				<button ng-click="gotoCheckout()" class="btn btn-default btn-primary custom_button">Checkout</button>
 				<button ng-click="emptyCart()" class="btn btn-default btn-danger">Empty Cart</button>
 			</div>
 		</main>
 
 
 		<!-- Checkout section-->
-		<main id="checkout" ng-show="checkout" class="animate-show-hide">
+		<main id="checkout" ng-show="showCheckout" class="animate-show-hide">
 
 			<div class="container">
 			 <h2>Shipping information</h2>
@@ -418,7 +440,7 @@
 
 
 		<!-- About section-->
-		<main id="about" ng-show="about" class="animate-show-hide">
+		<main id="about" ng-show="showAbout" class="animate-show-hide">
 
 			<div class="container">
 				<h2>About</h2>
@@ -497,12 +519,12 @@
 			app.controller('secondhand', function($scope, $http) {
 
 				// show/hide page sections as default starting point
-				$scope.hero = true;
-				$scope.showcase = false;
-				$scope.cart = false;
-				$scope.checkout = false;
-				$scope.details = false;
-				$scope.about = false;
+				$scope.showHero = true;
+				$scope.showShowcase = false;
+				$scope.showCart = false;
+				$scope.showCheckout = false;
+				$scope.showDetails = false;
+				$scope.showAbout = false;
 
 				// get list of products
 				$http.get('/api/products')
@@ -513,69 +535,82 @@
 				// define product details current item
 				$scope.currentItem = null;
 
+				// define cart
+				$scope.cart = [];
+
 				// add an item to the cart
 				$scope.addToCart = function(item) {
 					//TODO
-					alert('NOT IMPLEMENTED!');
+					$scope.cart.push({"amount":1, "item": item});
+				}
+
+				// checkout
+				$scope.gotoCheckout = function(item) {
+					$scope.showSubpage('checkout');
+				}
+
+				// add an item to the cart
+				$scope.emptyCart = function(item) {
+					$scope.cart = [];
 				}
 
 				// show/hide page sections based on user actions
 				$scope.showSubpage = function(pageName, parameter=null) {
 					$(".navbar-collapse").collapse('hide');
 					switch(pageName) {
-						case "hero":
-							$scope.showcase = false;
-							$scope.cart = false;
-							$scope.checkout = false;
-							$scope.details = false;
-							$scope.about = false;
-							$scope.hero = true;
+						case "showHero":
+							$scope.showShowcase = false;
+							$scope.showCart = false;
+							$scope.showCheckout = false;
+							$scope.showDetails = false;
+							$scope.showAbout = false;
+							$scope.showHero = true;
 							break;
 							
 						case "showcase":
-							$scope.hero = false;
-							$scope.cart = false;
-							$scope.checkout = false;
-							$scope.details = false;
-							$scope.about = false;
-							$scope.showcase = true;
+							$scope.showHero = false;
+							$scope.showCart = false;
+							$scope.showCheckout = false;
+							$scope.showDetails = false;
+							$scope.showAbout = false;
+							$scope.showShowcase = true;
 							break;
 							
 						case "cart":
-							$scope.hero = false;
-							$scope.showcase = false;
-							$scope.details = false;
-							$scope.checkout = false;
-							$scope.about = false;
-							$scope.cart = true;
+							$scope.showHero = false;
+							$scope.showShowcase = false;
+							$scope.showDetails = false;
+							$scope.showCheckout = false;
+							$scope.showAbout = false;
+							$scope.showCart = true;
 							break;
 							
 						case "details":
 							$scope.currentItem = parameter;
-							$scope.hero = false;
-							$scope.showcase = false;
-							$scope.cart = false;
-							$scope.checkout = false;
-							$scope.about = false;
-							$scope.details = true;
+							$scope.showHero = false;
+							$scope.showShowcase = false;
+							$scope.showCart = false;
+							$scope.showCheckout = false;
+							$scope.showAbout = false;
+							$scope.showDetails = true;
 							break;
 							
 						case "about":
-							$scope.hero = false;
-							$scope.showcase = false;
-							$scope.cart = false;
-							$scope.details = false;
-							$scope.checkout = false;
-							$scope.about = true;
+							$scope.showHero = false;
+							$scope.showShowcase = false;
+							$scope.showCart = false;
+							$scope.showDetails = false;
+							$scope.showCheckout = false;
+							$scope.showAbout = true;
 							break;
 							
 						case "checkout":
-							$scope.hero = false;
-							$scope.showcase = false;
-							$scope.cart = false;
-							$scope.details = false;
-							$scope.about = false;
-							$scope.checkout = true;
+							$scope.showHero = false;
+							$scope.showShowcase = false;
+							$scope.showCart = false;
+							$scope.showDetails = false;
+							$scope.showAbout = false;
+							$scope.showCheckout = true;
 							break;
 					}
 				};
