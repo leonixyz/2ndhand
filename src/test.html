@@ -230,7 +230,7 @@
 				<div class="showcase row">
 					<section ng-repeat="product in products" class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
 						<a ng-click="showSubpage('details', product)" class="link">
-							<img class="product-preview" src="{{product.Image}}">
+							<img class="product-preview" ng-src="{{product.Image}}">
 						</a>
 					</section>
 				</div>
@@ -248,7 +248,7 @@
 				</div>
 				<div class="row">			 
 					<div class="col-md-6">
-						<img class="product-image" src="{{currentItem.Image}}" />
+						<img class="product-image" ng-src="{{currentItem.Image}}" />
     				</div>
                     <div class="col-md-6">
 						<p>{{currentItem.Description}}</p>	 
