@@ -105,6 +105,11 @@
 			.product-preview {
 				width:100%;
 				height:100%;
+				max-width: 100%;
+			}
+
+			.product-image {
+				max-width: 100%;
 			}
 
 			div.stretchy-wrapper {
@@ -181,8 +186,12 @@
 			}
 		</style>
 	</head>
+
+
 	<body ng-controller="secondhand">
 
+
+		<!-- Main navigation -->
 		<header class="main-header">
 			<nav class="navbar container">
 			  <div class="container-fluid">
@@ -208,145 +217,47 @@
 			</nav>
 		</header>
 
+
+		<!-- Hero banner -->
 		<div class="stretchy-wrapper" ng-show="hero" class="animate-show-hide">
 			<div class="hero"></div>
 		</div>
 
+
+		<!-- Showcase -->
 		<main id="main-home" ng-show="showcase" class="animate-show-hide">
 			<div class="container">
 				<div class="showcase row">
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/1">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/2">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/3">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/4">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/5">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/6">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/7">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/8">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/9">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/10">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/1">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/2">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/3">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/4">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/5">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/6">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/7">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/8">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/9">
-						</a>
-					</section>
-					<section class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
-						<a ng-click="showSubpage('details')" class="link">
-							<img class="product-preview" src="http://lorempixel.com/300/300/abstract/10">
+					<section ng-repeat="product in products" class="product col col-xs-6 col-sm-4 col-md-3 col-lg-2">
+						<a ng-click="showSubpage('details', product)" class="link">
+							<img class="product-preview" src="{{product.Image}}">
 						</a>
 					</section>
 				</div>
 			</div>
 		</main>
 
+
 		<!-- Product details-->
-
-
 		<main id="main-details" ng-show="details" class="animate-show-hide">
 			<div class="container">
-			<div class="row">
-				<h2>Product details</h2>
-				 
-				 <div class="col-md-6">
-
-				     <img style="max-width:100%;" src="http://lorempixel.com/300/300/abstract/9" />
-
-    				</div>
-
-                    <div class="col-md-6">
-					<p>
-						Lorem ipsum dolor sit amet, qui te inani blandit invenire, nemore commodo moderatius eam et. Per in possit tibique indoctum. Sea et ubique cotidieque, ei nam prompta assentior, ne detraxit posidonium mea. Nam ex delectus perpetua, sit fugit pertinacia adversarium an, qui graece veritus et.
-					</p>	 
-
-					<h2>Price: 2 CUC </h2>
-					<h2>In Stock: 2 </h2>   
-
-					  <button type="submit" class="btn btn-default btn-primary custom_button">Add to cart</button>
-
+				<div class="row">			 
+					<div class="col-xs-12">
+						<h1>{{currentItem.Name}}</h1>
+					</div>
 				</div>
-                
+				<div class="row">			 
+					<div class="col-md-6">
+						<img class="product-image" src="{{currentItem.Image}}" />
+    				</div>
+                    <div class="col-md-6">
+						<p>{{currentItem.Description}}</p>	 
 
-                    </div>
+						<p>Price: {{currentItem.Price}} &euro; </p>
+						<p>In Stock: {{currentItem.Quantity}} </p>   
+						<button ng-click="addToCart(currentItem)" class="btn btn-default btn-primary custom_button">Add to cart</button>
+					</div>
+                </div>
 			</div>
 		</main>
 
@@ -547,14 +458,26 @@
 
 		<script>
 			var app = angular.module('eshop', ['ngAnimate']);
-			app.controller('secondhand', function($scope) {
+			app.controller('secondhand', function($scope, $http) {
 				$scope.hero = true;
 				$scope.showcase = false;
 				$scope.cart = false;
 				$scope.details = false;
 				$scope.about = false;
 
-				$scope.showSubpage = function(pageName) {
+				$http.get('/api/products')
+					.then(function(res){
+						$scope.products = res.data;                
+				});
+				
+				$scope.currentItem = null;
+
+				$scope.addToCart = function(item) {
+					//TODO
+					alert('NOT IMPLEMENTED!');
+				}
+
+				$scope.showSubpage = function(pageName, parameter=null) {
 					$(".navbar-collapse").collapse('hide');
 					switch(pageName) {
 						case "hero":
@@ -582,6 +505,7 @@
 							break;
 							
 						case "details":
+							$scope.currentItem = parameter;
 							$scope.hero = false;
 							$scope.showcase = false;
 							$scope.cart = false;
