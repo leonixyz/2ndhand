@@ -261,9 +261,43 @@
 			</div>
 		</main>
 
-		<!-- Beginning of payment section-->
 
-		<main id="payment-details" ng-show="cart" class="animate-show-hide">
+		<!-- Cart section-->
+		<main id="cart" ng-show="cart" class="animate-show-hide">
+			<div class="container">
+				<h1>Shopping Cart</h1>
+				<ol class="list-group">
+					<li class="list-group-item">
+						<a href="#" onclick="toggleCartItemDetails(this.parentNode)">
+							<i class="glyphicon glyphicon-menu-down"></i>
+							<strong>Item name</strong>
+						</a>
+						<span class="badge">123</span>
+
+						<div class="cart-item-details hidden row">
+							<div class="col-sm-10">
+								<p>
+									Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+								</p>
+							</div>
+							<div class="col-sm-2">
+								<input type="number" class="form-control" min="0" max="10" value="1">
+							</div>
+						</div>
+					</li>
+
+
+
+
+				</ol>
+				<button ng-click="checkout()" class="btn btn-default btn-primary custom_button">Checkout</button>
+				<button ng-click="emptyCart()" class="btn btn-default btn-danger">Empty Cart</button>
+			</div>
+		</main>
+
+
+		<!-- Checkout section-->
+		<main id="checkout" ng-show="checkout" class="animate-show-hide">
 
 			<div class="container">
 			 <h2>Shipping information</h2>
@@ -272,10 +306,10 @@
 			      	<label for="name">Name:</label>
 			      	<input type="text" class="form-control" id="name" required>
 			    </div>
+
 			    <div class="form-group col col-md-6">
 			      	<label for="surname">Surname:</label>
 			      	<input type="text" class="form-control" id="surname" required>
-			      	
 			    </div>
 
 			    <div class="form-group col col-md-6">
@@ -382,8 +416,8 @@
 			</div>
 		</main>
 
-		<!-- Beginning of about section-->
 
+		<!-- About section-->
 		<main id="about" ng-show="about" class="animate-show-hide">
 
 			<div class="container">
@@ -421,8 +455,8 @@
 			</div>
 		</main>
 
-		<!-- Beginning of footer section-->
 
+		<!-- Footer -->
 		<footer class="main-footer">
 			<div class="text-center social-container">
 				<a href="#"><span class="social fa fa-facebook-official"></span></a>
@@ -456,33 +490,43 @@
 			</div>
 		</footer>
 
+
+		<!-- Angular App -->
 		<script>
 			var app = angular.module('eshop', ['ngAnimate']);
 			app.controller('secondhand', function($scope, $http) {
+
+				// show/hide page sections as default starting point
 				$scope.hero = true;
 				$scope.showcase = false;
 				$scope.cart = false;
+				$scope.checkout = false;
 				$scope.details = false;
 				$scope.about = false;
 
+				// get list of products
 				$http.get('/api/products')
 					.then(function(res){
 						$scope.products = res.data;                
 				});
 				
+				// define product details current item
 				$scope.currentItem = null;
 
+				// add an item to the cart
 				$scope.addToCart = function(item) {
 					//TODO
 					alert('NOT IMPLEMENTED!');
 				}
 
+				// show/hide page sections based on user actions
 				$scope.showSubpage = function(pageName, parameter=null) {
 					$(".navbar-collapse").collapse('hide');
 					switch(pageName) {
 						case "hero":
 							$scope.showcase = false;
 							$scope.cart = false;
+							$scope.checkout = false;
 							$scope.details = false;
 							$scope.about = false;
 							$scope.hero = true;
@@ -491,6 +535,7 @@
 						case "showcase":
 							$scope.hero = false;
 							$scope.cart = false;
+							$scope.checkout = false;
 							$scope.details = false;
 							$scope.about = false;
 							$scope.showcase = true;
@@ -500,6 +545,7 @@
 							$scope.hero = false;
 							$scope.showcase = false;
 							$scope.details = false;
+							$scope.checkout = false;
 							$scope.about = false;
 							$scope.cart = true;
 							break;
@@ -509,6 +555,7 @@
 							$scope.hero = false;
 							$scope.showcase = false;
 							$scope.cart = false;
+							$scope.checkout = false;
 							$scope.about = false;
 							$scope.details = true;
 							break;
@@ -518,45 +565,67 @@
 							$scope.showcase = false;
 							$scope.cart = false;
 							$scope.details = false;
+							$scope.checkout = false;
 							$scope.about = true;
+							break;
+							
+						case "checkout":
+							$scope.hero = false;
+							$scope.showcase = false;
+							$scope.cart = false;
+							$scope.details = false;
+							$scope.about = false;
+							$scope.checkout = true;
 							break;
 					}
 				};
 			});
 		</script>
 
+
+		<!-- Mixed Javascript -->
 		<script>
-		var epsg4326 = new OpenLayers.Projection("EPSG:4326");
-		var mercator = new OpenLayers.Projection("EPSG:900913");
-		var latitude = 46.4983569;
-		var longitude = 11.3506779;
-		var zoom = 14;
+		function toggleCartItemDetails(cartItem) {
+			$(cartItem).find('.cart-item-details').first().toggleClass('hidden');
+			$(cartItem).find('.badge').first().toggleClass('hidden');
+			$(cartItem).find('.glyphicon').first().toggleClass('glyphicon-menu-down').toggleClass('glyphicon-menu-up');
+		}
+		</script>
 
-		var map = new OpenLayers.Map("map");
 
-		map.addLayer(new OpenLayers.Layer.OSM());
+		<!-- OpenLayers Map -->
+		<script>
+			var epsg4326 = new OpenLayers.Projection("EPSG:4326");
+			var mercator = new OpenLayers.Projection("EPSG:900913");
+			var latitude = 46.4983569;
+			var longitude = 11.3506779;
+			var zoom = 14;
 
-		map.setCenter(new OpenLayers.LonLat(longitude, latitude).transform(epsg4326, mercator), zoom); 
+			var map = new OpenLayers.Map("map");
 
-	    var markerLayer = new OpenLayers.Layer.Vector("Overlay");
-	    
-	    var marker = new OpenLayers.Feature.Vector(
-	            new OpenLayers.Geometry.Point(longitude, latitude).transform(epsg4326, mercator),
-	            {
-	            	description:'Free University of Bozen - Bolzano'
-	            },
-	            {
-	            	externalGraphic: 'https://cdn2.iconfinder.com/data/icons/snipicons/500/map-marker-128.png',
-	            	graphicHeight: 35,
-	            	graphicWidth: 35,
-	            	graphicXOffset:-17,
-	            	graphicYOffset:-17  
-	            }
-	        );
-	 
-	    markerLayer.addFeatures(marker);
+			map.addLayer(new OpenLayers.Layer.OSM());
 
-	    map.addLayer(markerLayer);
+			map.setCenter(new OpenLayers.LonLat(longitude, latitude).transform(epsg4326, mercator), zoom); 
+
+		    var markerLayer = new OpenLayers.Layer.Vector("Overlay");
+		    
+		    var marker = new OpenLayers.Feature.Vector(
+		            new OpenLayers.Geometry.Point(longitude, latitude).transform(epsg4326, mercator),
+		            {
+		            	description:'Free University of Bozen - Bolzano'
+		            },
+		            {
+		            	externalGraphic: 'https://cdn2.iconfinder.com/data/icons/snipicons/500/map-marker-128.png',
+		            	graphicHeight: 35,
+		            	graphicWidth: 35,
+		            	graphicXOffset:-17,
+		            	graphicYOffset:-17  
+		            }
+		        );
+		 
+		    markerLayer.addFeatures(marker);
+
+		    map.addLayer(markerLayer);
 		</script>
 	</body>
 </html>
