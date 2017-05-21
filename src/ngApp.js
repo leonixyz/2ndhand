@@ -1,7 +1,7 @@
 var app = angular.module('eshop', ['ngAnimate', 'ngRoute']);
 
 /* Main controller */
-app.controller('secondhand', function($scope, $http, $routeParams) {
+app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 
 	// get list of products
 	$scope.products = [];
@@ -16,9 +16,15 @@ app.controller('secondhand', function($scope, $http, $routeParams) {
 	// get current item from route parameters to be displayed in product detailed view
 	$scope.getCurrentItem = function() {
 		var id = $routeParams.ProductId;
-		return $scope.products.find(function(item) {
+		var item = $scope.products.find(function(item) {
 			return item.Id == id;
 		});
+		
+		if(item==null) {
+			$location.path('/not-found');
+		}
+
+		return item;
 	}
 
 	// define grand total (and how to calculate it)
@@ -94,7 +100,7 @@ app.config(function($routeProvider) {
         templateUrl : "templates/home.html"
     })
     .otherwise({
-        templateUrl : "templates/home.html"
+        templateUrl : "templates/404.html"
     });
 });
 
