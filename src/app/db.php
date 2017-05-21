@@ -43,6 +43,33 @@ class DB {
 	}
 
 	/*
+	 * Starts a transaction
+	 */
+	public function beginTransaction() {
+		$this->checkPDO();
+
+		return $this->pdo->beginTransaction();
+	}
+
+	/*
+	 * Commit changes
+	 */
+	public function commit() {
+		$this->checkPDO();
+
+		return $this->pdo->commit();
+	}
+
+	/*
+	 * Rollback transaction
+	 */
+	public function rollBack() {
+		$this->checkPDO();
+
+		return $this->pdo->rollBack();
+	}
+
+	/*
 	 * Fetches a table and returns its content as an array of objects
 	 */
 	public function fetch(string $tableName, array $params = array(), array $columns = array()) {
@@ -52,7 +79,8 @@ class DB {
 
 		$this->checkTableExists($tableName);
 
-		$columns = empty($columns) ? '*' : implode(',', $columns);
+		$columns = empty($columns) ? '*' : implode('" ,"', $columns);
+		$columns = $columns === '*' ? '*' : "\"{$columns}\"";
 
 		return $this->query("SELECT {$columns} FROM {$tableName}", $params);
 	}
@@ -114,7 +142,7 @@ class DB {
 	/*
 	 * Sends a query to the database and returns an array of objects
 	 */
-	private function query(string $query, array $params = null) {
+	private function query(string $query, array $params = array()) {
 		// prepare statement
 		try {
 			$stmt = $this->pdo->prepare($query, array(\PDO::ATTR_CURSOR => \PDO::CURSOR_FWDONLY));
@@ -127,8 +155,15 @@ class DB {
 		}
 
 		// execute statement
-		if(!$stmt->execute($params)) {
-			throw new DBException("An error occurred while executing a prepared statement");			
+		if(empty($params)) {
+			if(!$stmt->execute()) {
+				throw new DBException("An error occurred while executing a prepared statement");			
+			}
+		}
+		else {
+			if(!$stmt->execute($params)) {
+				throw new DBException("An error occurred while executing a prepared statement");			
+			}
 		}
 
 		// fetch results
@@ -150,6 +185,14 @@ class DB {
 		
 		return true;		
 	} 
+
+	/*
+	 * Insert a new object into the database
+	 */
+	public function insert($tableName, $object) {
+		// INSERT INTO Customers (CustomerName, City, Country)
+		// VALUES ('Cardinal', 'Stavanger', 'Norway');
+	}
 }
 
 

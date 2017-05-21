@@ -15,6 +15,23 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 	// define cart
 	$scope.cart = [];
 
+	// define user
+	$scope.user = {
+		first_name: "",
+		last_name: "",
+		address: "",
+		city: "",
+		country: "",
+		zip: "",
+		phone: "",
+		email: "",
+		cctype: "",
+		ccnum: "",
+		cccvv: "",
+		ccexp_year: "",
+		ccexp_month: ""
+	};
+
 	// define submission message
 	$scope.submissionMessage = {
 		title: null,
@@ -87,7 +104,11 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 	$scope.sendOrder = function() {
 		$http({
 			method: 'POST',
-			url: '/api/orders'
+			url: '/api/orders',
+			data: JSON.stringify({
+				user: $scope.user,
+				cart: $scope.cart
+			})
 		}).then(function successCallback(response) {
 			$scope.submissionMessage.title = "Success!";
 			$scope.submissionMessage.text = response.data;

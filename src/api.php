@@ -30,6 +30,13 @@ switch($signature) {
 		$res = $db->fetch('products');
 		break;
 
+	case "POST orders":
+		$res = fileOrder(json_decode($payload));
+		if($res === true) {
+			$res = 'Your order has been issued correctly.';
+		}
+		break;
+
 	default:
 		http_response_code(404);
 		die('API request unknown');

@@ -11,3 +11,6 @@ include(__DIR__ . '/PHPMailer/PHPMailerAutoload.php');
 
 // configure PHPMailer
 include(__DIR__ . '/mailer.conf.php');
+
+// load utils
+include(__DIR__ . '/util.php');
