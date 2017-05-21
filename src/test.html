@@ -189,6 +189,36 @@
 			.animate-show-hide.ng-hide-remove {
 				transition: all linear 0.5s;
 			}
+
+			.can-pulse {
+			  box-shadow: none;
+			}
+
+			.pulsating {
+				border-radius: 50%;
+				background:#fff;
+				animation: pulse 0.7s;
+			}
+
+			@-webkit-keyframes pulse {
+				0% {
+					-webkit-box-shadow: 0 0 300px 300px #fff;
+				}
+				100% {
+					-webkit-box-shadow: 0 0 0 0 #fff;
+				}
+			}
+
+			@keyframes pulse {
+				0% {
+					-moz-box-shadow: 0 0 300px 300px #fff;
+					box-shadow: 0 0 300px 300px #fff;
+				}
+				100% {
+					-moz-box-shadow: 0 0 0 0 #fff;
+					box-shadow: 0 0 0 0 #fff;
+				}
+			}
 		</style>
 	</head>
 	<body ng-controller="secondhand">
@@ -197,7 +227,7 @@
 			<nav class="navbar container">
 			  <div class="container-fluid">
 			    <div class="navbar-header">
-			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			      <button id="navbar-toggle-btn" type="button" class="navbar-toggle can-pulse" data-toggle="collapse" data-target="#myNavbar">
 			        <span class="icon-bar u-bg-white"></span>
 			        <span class="icon-bar u-bg-white"></span>
 			        <span class="icon-bar u-bg-white"></span>                        
@@ -210,7 +240,7 @@
 			    <div class="collapse navbar-collapse text-right" id="myNavbar">
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="#" ng-click="showSubpage('showcase')" class="link">Shop <span class="glyphicon glyphicon-home"></span></a></li>
-			        <li><a href="#" ng-click="showSubpage('cart')" class="link">Cart <span class="fa fa-shopping-bag"></span></a></li>
+			        <li><a href="#" ng-click="showSubpage('cart')" class="link">Cart <span class="fa fa-shopping-bag" id="cart-icon"></span></a></li>
 			        <li><a href="#" ng-click="showSubpage('about')" class="link"></span>About <span class="glyphicon glyphicon-info-sign"></a></li>
 			      </ul>
 			    </div>
@@ -564,6 +594,7 @@
 					item.Quantity--;
 					$scope.updateGrandTotal();
 					$scope.showSubpage('showcase');
+					animateCartIcon();
 				}
 
 				// checkout
@@ -671,6 +702,17 @@
 			$(cartItem).find('.cart-item-details').first().toggleClass('hidden');
 			$(cartItem).find('.badge').first().toggleClass('hidden');
 			$(cartItem).find('.glyphicon').first().toggleClass('glyphicon-menu-down').toggleClass('glyphicon-menu-up');
+		}
+
+		function animateCartIcon() {
+			$('#cart-icon').toggleClass('pulsating');
+			$('#navbar-toggle-btn').toggleClass('pulsating');
+
+			
+			setTimeout(function() {
+				$('#cart-icon').toggleClass('pulsating');
+				$('#navbar-toggle-btn').toggleClass('pulsating');
+			}, 700);
 		}
 		</script>
 
