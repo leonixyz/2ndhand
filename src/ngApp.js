@@ -15,17 +15,21 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 	// define cart
 	$scope.cart = [];
 
+	// define submission message
+	$scope.submissionMessage = {
+		title: null,
+		text: null
+	};
+
 	// get current item from route parameters to be displayed in product detailed view
 	$scope.getCurrentItem = function() {
 		var id = $routeParams.ProductId;
 		var item = $scope.products.find(function(item) {
 			return item.Id == id;
 		});
-
 		if(item==null) {
 			$location.path('/not-found');
 		}
-
 		return item;
 	}
 
@@ -77,6 +81,21 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 		});
 		$scope.cart = [];
 		$scope.updateGrandTotal();
+	}
+
+	// send order
+	$scope.sendOrder = function() {
+		$http({
+			method: 'POST',
+			url: '/api/orders'
+		}).then(function successCallback(response) {
+			$scope.submissionMessage.title = "Success!";
+			$scope.submissionMessage.text = response.data;
+		}, function errorCallback(response) {
+			$scope.submissionMessage.title = "Error!";
+			$scope.submissionMessage.text = response.data;
+		});
+		$('#submissionModal').modal('show');
 	}
 });
 

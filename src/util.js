@@ -22,3 +22,5 @@ function onlyNumericInput(e) {
 		e.preventDefault();
 	}
 }
+
+$('#submissionModal').modal({show: false});

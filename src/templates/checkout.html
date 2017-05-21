@@ -2,7 +2,7 @@
 <main id="checkout">
 	<div class="container">
 		<h1>Checkout</h1>
-		<form name="checkout_form">
+		<form name="checkout_form" ng-submit="sendOrder()">
 			<h2>Shipping</h2>
 			<div class="row">
 				<div class="form-group col-sm-6">
@@ -104,9 +104,31 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<button class="btn btn-default btn-primary btn-xl custom_button" ng-disabled="">Confirm Payment</button>
+					<button class="btn btn-default btn-primary btn-xl custom_button" ng-disabled="">Confirm Payment: {{grandTotal}} &euro;</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </main>
+
+
+<!-- Modal -->
+<div id="submissionModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" onclick="javascript:window.location='#/'">&times;</button>
+        <h4 class="modal-title">{{submissionMessage.title}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        	{{submissionMessage.text}}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location='#/'">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
