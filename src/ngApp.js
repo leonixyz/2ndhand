@@ -1,4 +1,6 @@
+/* Second Hand Shop app */
 var app = angular.module('eshop', ['ngAnimate', 'ngRoute']);
+
 
 /* Main controller */
 app.controller('secondhand', function($scope, $http, $routeParams, $location) {
@@ -19,7 +21,7 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 		var item = $scope.products.find(function(item) {
 			return item.Id == id;
 		});
-		
+
 		if(item==null) {
 			$location.path('/not-found');
 		}
@@ -78,6 +80,7 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 	}
 });
 
+
 /* App routing */
 app.config(function($routeProvider) {
    $routeProvider
@@ -103,6 +106,7 @@ app.config(function($routeProvider) {
         templateUrl : "templates/404.html"
     });
 });
+
 
 /* Custom filters */
 app.filter('availableInStock', function() {
