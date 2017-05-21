@@ -1,0 +1,22 @@
+<!-- Product details-->
+<main id="main-details">
+	<div class="container">
+		<div class="row">			 
+			<div class="col-xs-12">
+				<h1>{{getCurrentItem().Name}}</h1>
+			</div>
+		</div>
+		<div class="row">			 
+			<div class="col-md-6">
+				<img class="product-image" ng-src="{{getCurrentItem().Image}}" />
+			</div>
+            <div class="col-md-6">
+				<p>{{getCurrentItem().Description}}</p>	 
+
+				<p>Price: {{getCurrentItem().Price}} &euro; </p>
+				<p>In Stock: {{getCurrentItem().Quantity}} </p>   
+				<a href="#/products" ng-click="addToCart(getCurrentItem())" class="btn btn-default btn-primary custom_button">Add to cart</a>
+			</div>
+        </div>
+	</div>
+</main>

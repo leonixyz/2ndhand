@@ -1,0 +1,98 @@
+<!doctype html>
+<html ng-app="eshop" lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Second Hand Shop</title>
+		<link rel="icon" type="image/png" href="img/2ndhand-bg-32.png" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
+		<link rel="stylesheet" href="main.css">
+	</head>
+
+	<body ng-controller="secondhand">
+
+		<!-- Main navigation -->
+		<header class="main-header">
+			<nav class="navbar container">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <button id="navbar-toggle-btn" type="button" class="navbar-toggle can-pulse" data-toggle="collapse" data-target="#myNavbar">
+			        <span class="icon-bar u-bg-white"></span>
+			        <span class="icon-bar u-bg-white"></span>
+			        <span class="icon-bar u-bg-white"></span>                        
+			      </button>
+			      <a href="#/home" class="logo">
+					<img src="img/2ndhand-64.png">
+					<span class="hidden-xs"> 2<sup>nd</sup> hand</span>
+			      </a>
+			    </div>
+			    <div class="collapse navbar-collapse text-right" id="myNavbar">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="#/products">Shop <span class="glyphicon glyphicon-home"></span></a></li>
+			        <li><a href="#/cart">Cart <span class="fa fa-shopping-bag" id="cart-icon"></span></a></li>
+			        <li><a href="#/about"></span>About <span class="glyphicon glyphicon-info-sign"></a></li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>
+		</header>
+
+
+		<!-- Main content -->
+		<ng-view></ng-view>
+
+
+		<!-- Footer -->
+		<footer class="main-footer">
+			<div class="text-center social-container">
+				<a href="#"><span class="social fa fa-facebook-official"></span></a>
+				<a href="#"><span class="social fa fa-twitter-square"></span></a>
+				<a href="#"><span class="social fa fa-linkedin-square"></span></a>
+				<br class="visible-xs">
+				<a href="#"><span class="social fa fa-pinterest-square"></span></a>
+				<a href="#"><span class="social fa fa-telegram"></span></a>
+				<a href="#"><span class="social fa fa-youtube-square"></span></a>
+			</div>
+
+			<div class="container map-container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div id="map"></div>
+					</div>
+					<div class="col-sm-6">
+						<address>
+							<strong>2<sup>nd</sup> hand</strong><br>
+							Free University of Bozen - Bolzano<br>
+							piazza Università 1,<br>
+							Bolzano 39100<br>
+							Italy<br>
+						</address>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center u-margin-top">
+				<small>&copy; 2<sup>nd</sup> hand 2017</small>
+			</div>
+		</footer>
+
+
+		<!-- Angular App -->
+		<script src="ngApp.js"></script>
+
+
+		<!-- Mixed Javascript -->
+		<script src="util.js"></script>
+
+
+		<!-- OpenLayers Map -->
+		<script src="map.js"></script>
+	</body>
+</html>

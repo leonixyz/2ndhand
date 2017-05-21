@@ -1,0 +1,49 @@
+<!-- Cart section-->
+<main id="cart">
+	<div class="container">
+		<h1>Shopping Cart</h1>
+
+		<!-- Empty cart -->
+		<div id="empty-cart-info-message" ng-show="!cart.length" class="alert alert-info">
+			<i class="glyphicon glyphicon-info-sign"></i>
+			Your cart is empty
+		</div>
+
+		<!-- Not-empty cart -->
+		<div ng-show="cart.length > 0">
+			<ul class="list-group">
+				<li ng-repeat="cartItem in cart" class="list-group-item">
+					<a class="link" onclick="toggleCartItemDetails(this.parentNode)">
+						<i class="glyphicon glyphicon-menu-down"></i>
+						<strong>{{cartItem.item.Name}}</strong>
+					</a>
+					<span class="badge">{{cartItem.amount}}</span>
+
+					<div class="cart-item-details hidden row">
+						<div class="col-xs-6">
+							<img ng-src="{{cartItem.item.Image}}" class="product-image">
+						</div>
+						<div class="col-xs-6">
+							<div class="row">
+								<div class="col-xs-12 text-right">
+									amount<br>
+									<button class="btn btn-default btn-xs custom_button" ng-click="changeAmount(cartItem, 1)" ng-disabled="cartItem.item.Quantity == 0"><i class="glyphicon glyphicon-plus"></i></button>
+									{{cartItem.amount}}
+									<button class="btn btn-default btn-xs custom_button" ng-click="changeAmount(cartItem, -1)" ng-disabled="cartItem.amount == 0"><i class="glyphicon glyphicon-minus"></i></button>
+								</div>
+								<div class="col-xs-12 text-right">
+									<br>
+									subtotal<br>
+									<strong>{{cartItem.amount * cartItem.item.Price}} &euro;</strong>
+								</div>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<p><strong>Grand Total: {{grandTotal}} &euro;<strong></p>
+			<a href="#/checkout" class="btn btn-default btn-primary custom_button">Checkout</a>
+			<button ng-click="emptyCart()" class="btn btn-default btn-danger">Empty Cart</button>
+		</div>
+	</div>
+</main>

@@ -1,0 +1,20 @@
+<!-- Showcase -->
+<main id="main-home">
+<div class="container">
+	<h1>Showcase</h1>
+	<div class="alert alert-warning" ng-show="products.length == 0">
+		<p>
+			<i class="glyphicon glyphicon-info-sign"></i>
+			It seems there aren't any items left in this shop...
+		</p>
+	</div>
+
+	<div class="showcase row" ng-show="products.length > 0">
+		<section ng-repeat="product in products | availableInStock" class="product col-xs-6 col-sm-4 col-md-3 col-lg-2">
+			<a href="#/products/{{product.Id}}">
+				<img class="product-preview" ng-src="{{product.Image}}">
+			</a>
+		</section>
+	</div>
+</div>
+</main>
