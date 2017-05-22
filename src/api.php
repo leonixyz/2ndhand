@@ -32,18 +32,27 @@ switch($signature) {
 		$res = $db->fetch('products');
 		break;
 
+
 	case "POST orders":
 		$orderData = json_decode($payload);
+		// file a new order
 		$res = fileOrder($orderData);
 		if($res === true) {
-			$res = 'Your order has been issued correctly and your payment processed, you will get an email as confirmation.';
+			$res = 'Your order has been issued correctly and your payment processed';
+			// send confirmation email
+			$mail = sendConfirmationEmail($orderData);
+			if($mail === true) {
+				$res .= ', we sent you a confirmail email.';
+			}
+			else {
+				$res .= ', but we couldn\'t send you a confirmation email. Reason: '.print_r($mail);
+			}
 		}
 		else {
 			http_response_code(400);
 		}
-		sendUserConfirmation();
-		sendAdminConfirmation();
 		break;
+
 
 	default:
 		http_response_code(404);

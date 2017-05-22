@@ -151,16 +151,28 @@ function pay() {
 
 
 /*
- * Sends the user a confirmation email for the order
+ * Wrap PHPMailer to send email easier
  */
-function sendUserConfirmation() {
-	// TODO
+function sendEmail($to, $subject, $body){
+	$mail = getMailer();
+	$mail->addAddress($to);
+	$mail->addBCC('giulio.roman@eurac.edu');
+	$mail->addBCC('aurelia.pagano@unibz.it');
+	$mail->Subject = $subject;
+	$mail->Body = $body;
+
+	if(!$mail->send()) {
+	    return $mail->ErrorInfo;
+	} else {
+	    return true;
+	}
 }
 
 
 /*
- * Sends the admin a confirmation email for the order
+ * Send a confirmation email for the order
  */
-function sendAdminConfirmation() {
-	//TODO
+function sendConfirmationEmail($orderData) {
+	//TODO compose email message
+	sendEmail('giulio.roman@eurac.edu', 'test', 'test');
 }
