@@ -1,6 +1,10 @@
 <?php
 
-function isValidJSONforOrder($obj) {
+
+/*
+ * Validates an object to see if it fits all requirements for the application
+ */
+function isValidDataforOrder($obj) {
 
 	// validate user has all fields and they are consistent
 	if(
@@ -29,7 +33,7 @@ function isValidJSONforOrder($obj) {
 
 	// check credit card is not expired
 	$expires = DateTime::createFromFormat('dmyy', '01' . sprintf('%02d', intval($obj->user->ccexp_month)+1) . $obj->user->ccexp_year);
-	$now     = new DateTime();
+	$now = new DateTime();
 	if ($expires < $now) {
 		return 'Your credit card is expired';
 	}
@@ -54,14 +58,16 @@ function isValidJSONforOrder($obj) {
 }
 
 
-/* issues a new order */
+/* 
+ * Issues a new order
+ */
 function fileOrder($obj) {
 
 	$errors = array();
 	$grandTotal = 0;
 
 	// check the received data is in the right form
-	$validation = isValidJSONforOrder($obj);
+	$validation = isValidDataforOrder($obj);
 	if($validation !== true) return $validation;
 
 	$db = new DB();
@@ -99,12 +105,17 @@ function fileOrder($obj) {
 			$grandTotal += $store[0]->Price * $amount;
 		}
 
-		//TODO subtract $amount from $store[0]->Quantity and update db
+		// update product quantity available in the store
+		$newQuantity = $store[0]->Quantity - $amount;
+		$db->update('products', array('Quantity', $newQuantity), array("\"Id\" = $id"));
 	}
 
-	//TODO pay
+	// try to accept payment
+	if(!pay()) {
+		array_push($errors, 'Your payment couln\'t be processed, please review your billing data.');
+	}
 
-	//TODO email user for confirmation
+	//TODO insert order in database
 
 	if(empty($errors)) {
 		return $db->commit();
@@ -113,4 +124,29 @@ function fileOrder($obj) {
 		$db->rollBack();
 		return implode($errors, '; ');
 	}
+}
+
+
+/*
+ * Issue payment: return whether payment succeeded or not
+ */
+function pay() {
+	// dummy
+	return true;
+}
+
+
+/*
+ * Sends the user a confirmation email for the order
+ */
+function sendUserConfirmation() {
+	// TODO
+}
+
+
+/*
+ * Sends the admin a confirmation email for the order
+ */
+function sendAdminConfirmation() {
+	//TODO
 }

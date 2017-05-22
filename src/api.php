@@ -1,7 +1,9 @@
 <?php
+
+// initialize everything
 include('app/init.php');
 
-// get http method and payload
+// get http method and request payload
 $method = $_SERVER['REQUEST_METHOD'];
 $payload = file_get_contents('php://input');
 
@@ -31,10 +33,13 @@ switch($signature) {
 		break;
 
 	case "POST orders":
-		$res = fileOrder(json_decode($payload));
+		$orderData = json_decode($payload);
+		$res = fileOrder($orderData);
 		if($res === true) {
-			$res = 'Your order has been issued correctly.';
+			$res = 'Your order has been issued correctly and your payment processed, you will get an email as confirmation.';
 		}
+		sendUserConfirmation();
+		sendAdminConfirmation();
 		break;
 
 	default:
@@ -45,5 +50,3 @@ switch($signature) {
 // return json
 header('Content-Type: application/json');
 echo json_encode($res);
-
-?>

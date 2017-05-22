@@ -106,7 +106,7 @@ class DB {
 	 */
 	private function checkTableExists($tableName) {
 		if(!$this->tableExists($tableName)) {
-			throw new DBException("Table doesn't exists");
+			throw new DBException('Table doesn\'t exists');
 		}
 
 		return true;
@@ -135,7 +135,7 @@ class DB {
 	 */
 	private function checkPDO() {
 		if(!$this->pdo) {
-			throw new DBException("No connection to the database established");
+			throw new DBException('No connection to the database established');
 		}
 	}
 
@@ -151,18 +151,18 @@ class DB {
 			throw new DBException($e);
 		}
 		if(!$stmt) {
-			throw new DBException("Couldn't prepare SQL statement");
+			throw new DBException('Couldn\'t prepare SQL statement');
 		}
 
 		// execute statement
 		if(empty($params)) {
 			if(!$stmt->execute()) {
-				throw new DBException("An error occurred while executing a prepared statement");			
+				throw new DBException('An error occurred while executing a prepared statement');			
 			}
 		}
 		else {
 			if(!$stmt->execute($params)) {
-				throw new DBException("An error occurred while executing a prepared statement");			
+				throw new DBException('An error occurred while executing a prepared statement');			
 			}
 		}
 
@@ -180,18 +180,61 @@ class DB {
 	 */
 	private static function checkTableName($tableName) {
 		if(!preg_match('/^[a-zA-Z_]+[a-zA-Z0-9_]*\.?[a-zA-Z_]+[a-zA-Z0-9_]*$/', $tableName)) {
-			throw new DBException("Invalid table name");
+			throw new DBException('Invalid table name');
 		}
 		
 		return true;		
 	} 
 
 	/*
-	 * Insert a new object into the database
+	 * Insert a new record into the database
 	 */
 	public function insert($tableName, $object) {
+		//TODO
 		// INSERT INTO Customers (CustomerName, City, Country)
 		// VALUES ('Cardinal', 'Stavanger', 'Norway');
+	}
+
+	/*
+	 * Update a table (only numbers and strings allowed)
+	 */
+	public function update($tableName, $set = array(), $where = array()) {
+		$this->checkPDO();
+
+		static::checkTableName($tableName);
+
+		// check parameters for consistency
+		if(!is_array($set) || empty($set)) {
+			throw new DBException('No SET clause supplied, cannot update table '.$tableName);
+		}
+		if(count($set) != 2) {
+			throw new DBException('Wrong parameters passed to the SET clause, expecting only two, but got: '.implode($set, ', '));
+		}
+		if(!is_array($where) || empty($where)) {
+			throw new DBException('No WHERE clause supplied, cannot update table '.$tableName);
+		}
+
+		// select quotation mode, depending whether we have to update a number or a string
+		if(!is_numeric($set[1])) {
+			// string: need to use 'single quotes' in SQL
+			$q = '\'';
+		}
+		else {
+			// number: no need to use 'single quotes' in SQL
+			$q = '';
+		}
+
+		// build SET clause
+		$setClause = "\"{$set[0]}\" = {$q}{$set[1]}{$q}";
+
+		// build WHERE clause
+		$whereClause = implode($where, ' AND ');
+
+		// build SQL
+		$sql = "UPDATE \"{$tableName}\" SET {$setClause} WHERE {$whereClause}";
+
+		// do the job
+		return $this->pdo->exec($sql);
 	}
 }
 
