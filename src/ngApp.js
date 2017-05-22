@@ -160,3 +160,9 @@ app.filter('availableInStock', function() {
 		return filtered;
 	};
 });
+
+app.filter('isEmpty', function() {
+	return function(items) {
+		return items.length == 0;
+	};
+});
