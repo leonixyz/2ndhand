@@ -1,5 +1,8 @@
 -- Adminer 4.3.0 PostgreSQL dump
 
+
+-- products
+
 DROP TABLE IF EXISTS "products";
 
 DROP SEQUENCE IF EXISTS "products_Id_seq";
@@ -26,4 +29,25 @@ INSERT INTO "products" ("Id", "Name", "Description", "Quantity", "Image", "Price
 (12,	'Led TV',	'An LED-backlit LCD is a flat panel display which uses LED backlighting instead of the cold cathode fluorescent (CCFL) backlighting used by most other LCDs.[1] LED-backlit LCD TVs use the same TFT LCD (thin-film-transistor liquid-crystal display) technologies as CCFL-backlit LCD TVs.',	1,	'http://lorempixel.com/300/300/technics/9',	'250'),
 (13,	'MP3 Player',	'An MP3 player or Digital Audio Player is an electronic device that can play digital audio files. It is a type of Portable Media Player. The term ''MP3 player'' is a misnomer, as most players play more than the MP3 file format.',	4,	'http://lorempixel.com/300/300/technics/10',	'15');
 
--- 2017-05-20 13:27:32.148069+00
+
+
+-- orders
+
+DROP TABLE IF EXISTS "orders";
+CREATE TABLE "public"."orders" (
+    "User_FirstName" character varying(256),
+    "User_LastName" character varying(256),
+    "User_Address" character varying(256),
+    "User_City" character varying(256),
+    "User_Country" character varying(256),
+    "User_ZIP" character varying(256),
+    "User_Phone" character varying(256),
+    "User_Email" character varying(256),
+    "User_CC_Type" character varying(256),
+    "User_CC_Num" character varying(256),
+    "User_CC_CVV" character varying(256),
+    "User_CC_Exp_Year" character varying(256),
+    "User_CC_Exp_Month" character varying(256),
+    "JSON" character varying(8192)
+) WITH (oids = false);
+

@@ -112,11 +112,30 @@ function fileOrder($obj) {
 
 	// try to accept payment
 	if(!pay()) {
-		array_push($errors, 'Your payment couln\'t be processed, please review your billing data.');
+		array_push($errors, 'Your payment couln\'t be processed, please review your billing data');
 	}
 
-	//TODO insert order in database
+	// insert order in database
+	if($db->insert('orders', array(
+		'User_FirstName' => $obj->user->first_name,
+		'User_LastName' => $obj->user->last_name,
+		'User_Address' => $obj->user->address,
+		'User_City' => $obj->user->city,
+		'User_Country' => $obj->user->country,
+		'User_ZIP' => $obj->user->zip,
+		'User_Phone' => $obj->user->phone,
+		'User_Email' => $obj->user->email,
+		'User_CC_Type' => $obj->user->cctype,
+		'User_CC_Num' => $obj->user->ccnum,
+		'User_CC_CVV' => $obj->user->cccvv,
+		'User_CC_Exp_Year' => $obj->user->ccexp_year,
+		'User_CC_Exp_Month' => $obj->user->ccexp_month,
+		'JSON' => json_encode($obj->cart)
+	)) != 1) {
+		array_push($errors, 'Couldn\'t save your order into the database, an error occurred');
+	}
 
+	// commit or rollback
 	if(empty($errors)) {
 		return $db->commit();
 	}

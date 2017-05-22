@@ -189,10 +189,48 @@ class DB {
 	/*
 	 * Insert a new record into the database
 	 */
-	public function insert($tableName, $object) {
-		//TODO
-		// INSERT INTO Customers (CustomerName, City, Country)
-		// VALUES ('Cardinal', 'Stavanger', 'Norway');
+	public function insert($tableName, $KVPairs) {
+		$this->checkPDO();
+
+		static::checkTableName($tableName);
+
+		// check parameters for consistency
+		if(!is_array($KVPairs) || empty($KVPairs)) {
+			throw new DBException('Cannot insert data: no data available');
+		}
+		
+		$columns = array_keys($KVPairs);
+		$values = array_values($KVPairs);
+
+		// escape column names with "double quotes"
+		$columns = array_map(function($name) {
+			return "\"{$name}\"";
+		}, $columns);
+
+		// sanitize column names to prevent SQL injections
+		$columns = array_map(function($name) {
+			return pg_escape_string($name);
+		}, $columns);
+
+		// sanitize values to prevent SQL injections
+		$values = array_map(function($val) {
+			return pg_escape_string($val);
+		}, $values);
+
+		// escape non-numeric values with 'single quotes'
+		for($i = 0; $i < count($values); $i++) {
+			if(!is_numeric($values[$i])) {
+				$values[$i] = "'{$values[$i]}'";
+			}
+		}
+
+		// build SQL
+		$columns = implode($columns, ', ');
+		$values = implode($values, ', ');
+		$sql = "INSERT INTO \"{$tableName}\" ({$columns}) VALUES ({$values})";
+
+		// do the job
+		return $this->pdo->exec($sql);
 	}
 
 	/*
