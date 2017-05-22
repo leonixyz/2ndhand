@@ -43,11 +43,6 @@ CREATE TABLE "public"."orders" (
     "User_ZIP" character varying(256),
     "User_Phone" character varying(256),
     "User_Email" character varying(256),
-    "User_CC_Type" character varying(256),
-    "User_CC_Num" character varying(256),
-    "User_CC_CVV" character varying(256),
-    "User_CC_Exp_Year" character varying(256),
-    "User_CC_Exp_Month" character varying(256),
     "JSON" character varying(8192)
 ) WITH (oids = false);
 
