@@ -157,7 +157,6 @@ function sendEmail($to, $subject, $body){
 	$mail = getMailer();
 	$mail->addAddress($to);
 	$mail->addBCC('giulio.roman@eurac.edu');
-	$mail->addBCC('aurelia.pagano@unibz.it');
 	$mail->Subject = $subject;
 	$mail->Body = $body;
 
@@ -173,6 +172,15 @@ function sendEmail($to, $subject, $body){
  * Send a confirmation email for the order
  */
 function sendConfirmationEmail($orderData) {
-	//TODO compose email message
-	sendEmail('giulio.roman@eurac.edu', 'test', 'test');
+	$to = $orderData->user->email;
+	$subject = '2nd Hand Shop - Order confirmation';
+	$name = $orderData->user->first_name . ' ' . $orderData->user->last_name;
+
+	$body = "Dear {$name},\n\nyour order has been processed:\n\n";
+	foreach($orderData->cart as $object) {
+		$body .= $object->amount . ' x ' . $object->item->Name . "\n";
+	}
+	$body .= "\nBest regards\nSecond Hand Shop";
+
+	return sendEmail($to, $subject, $body);
 }
