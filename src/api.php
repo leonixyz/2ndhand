@@ -38,6 +38,9 @@ switch($signature) {
 		if($res === true) {
 			$res = 'Your order has been issued correctly and your payment processed, you will get an email as confirmation.';
 		}
+		else {
+			http_response_code(400);
+		}
 		sendUserConfirmation();
 		sendAdminConfirmation();
 		break;
