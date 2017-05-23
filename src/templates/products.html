@@ -9,7 +9,7 @@
 		</p>
 	</div>
 
-	<div class="showcase row" ng-show="products | availableInStock | !isEmpty">
+	<div class="showcase row" ng-show="!(products | availableInStock | isEmpty)">
 		<section ng-repeat="product in products | availableInStock" class="product col-xs-6 col-sm-4 col-md-3 col-lg-2">
 			<a href="#/products/{{product.Id}}">
 				<img class="product-preview" ng-src="{{product.Image}}">

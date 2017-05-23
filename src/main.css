@@ -16,10 +16,8 @@ body {
 }
 
 .custom_button{
-
 	background: rgba(133,175,75,1);
 	border-color: white;
-
 }
 
 .main-header, .main-footer {
@@ -31,6 +29,15 @@ body {
 .main-header a, .main-footer a {
 	color:white;
 	text-decoration: none;
+}
+
+.my-badge {
+	position:absolute;
+	margin-top:1em;
+	margin-left:-1em;
+    background: #4b622b;
+    color: white;
+    font-size: 0.5em;
 }
 
 .logo {

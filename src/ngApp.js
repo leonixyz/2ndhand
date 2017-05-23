@@ -79,6 +79,7 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 		item.Quantity--;
 		$scope.updateGrandTotal();
 		animateCartIcon();
+		$scope.updateCartCounterBadge();
 	}
 
 	// change amount of objects of a kind in the cart
@@ -89,6 +90,16 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 			$scope.cart.splice($scope.cart.indexOf(cartItem), 1);
 		}
 		$scope.updateGrandTotal();
+		$scope.updateCartCounterBadge();
+	}
+
+	// counts the total amount of objects in the cart and updated the badge
+	$scope.updateCartCounterBadge = function() {
+		var count = 0;
+		for(var i = 0; i < $scope.cart.length; i++) {
+			count += $scope.cart[i].amount;
+		}
+		$('#cart-counter').html(count);
 	}
 
 	// empty cart
@@ -98,6 +109,7 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 		});
 		$scope.cart = [];
 		$scope.updateGrandTotal();
+		$scope.updateCartCounterBadge();
 	}
 
 	// send order
