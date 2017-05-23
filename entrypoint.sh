@@ -29,7 +29,7 @@ then
 	echo ");" 							>> /var/www/postgresql-www-data.php
 
 	# Initialize database with dummy data
-	su postgres -c psql www < /init.sql
+	su postgres -c 'psql --dbname=www' < /init.sql
 fi
 
 # Start supervisor
