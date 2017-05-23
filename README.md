@@ -9,7 +9,7 @@ Project for the course Advanced Internet Technologies, year 2017, Master in CS.
 
 ## Installation
 
-1. Clone repo recursively: `git clone --recursive git@gitlab.inf.unibz.it:CS-master-AIT-2017-rog-paa/eshop.git`
-2. Build image: `docker build -t unibz/2ndhand eshop`
-3. Run: `docker run -d -p 80:80 --name 2ndhand -v $(pwd)/eshop/src:/var/www/html unibz/2ndhand` (This command may fail on Linux, in that case prepend `sudo`)
+1. Clone repo recursively: `git clone --recursive https://github.com/leonixyz/2ndhand.git`
+2. Build image: `docker build -t unibz/2ndhand 2ndhand`
+3. Run: `docker run -d -p 80:80 -p 443:443 --name 2ndhand -v $(pwd)/2ndhand/src:/var/www/html unibz/2ndhand` (This command may fail on Linux, in that case prepend `sudo`)
 4. Code in `src` and visit the website on `http://127.0.0.1`
