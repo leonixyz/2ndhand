@@ -34,6 +34,6 @@ RUN mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp
 RUN chown postgres:postgres /var/run/postgresql/9.5-main.pg_stat_tmp -R
 
 # Apache will listen on port 80
-EXPOSE 80
+EXPOSE 80 443
 
 CMD ["/bin/bash", "/entrypoint.sh"]
