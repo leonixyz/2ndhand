@@ -13,3 +13,4 @@ Project for the course Advanced Internet Technologies, year 2017, Master in CS.
 2. Build image: `docker build -t unibz/2ndhand 2ndhand`
 3. Run: `docker run -d -p 80:80 -p 443:443 --name 2ndhand -v $(pwd)/2ndhand/src:/var/www/html unibz/2ndhand` (This command may fail on Linux, in that case prepend `sudo`)
 4. Code in `src` and visit the website on `http://127.0.0.1`
+5. Get database password `docker exec -it 2ndhand cat /var/www/postgresql-www-data.php` and manage database on `http://127.0.0.1/adminer.php`

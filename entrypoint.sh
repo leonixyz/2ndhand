@@ -27,9 +27,6 @@ then
 	echo "  'USER' => 'www'," 			>> /var/www/postgresql-www-data.php
 	echo "  'PASS' => '$PG_USER_PW'," 	>> /var/www/postgresql-www-data.php
 	echo ");" 							>> /var/www/postgresql-www-data.php
-
-	# Initialize database with dummy data
-	su postgres -c 'psql --dbname=www' < /init.sql
 fi
 
 # Start supervisor
