@@ -104,7 +104,7 @@
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					<button class="btn btn-default btn-primary btn-xl custom_button" ng-disabled="">Confirm Payment: {{grandTotal}} &euro;</button>
+					<button class="btn btn-default btn-primary btn-xl custom_button" id="confirm-payment-button">Confirm Payment: {{grandTotal}} &euro;</button>
 				</div>
 			</div>
 		</form>
@@ -129,6 +129,13 @@
         <button class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location='#/'">Close</button>
       </div>
     </div>
-
   </div>
+</div>
+
+
+<!-- Spinner -->
+<div class="spinner hidden">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
 </div>

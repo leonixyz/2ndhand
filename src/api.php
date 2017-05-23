@@ -34,6 +34,7 @@ switch($signature) {
 
 
 	case "POST orders":
+		$res = "hey"; break;
 		$orderData = json_decode($payload);
 		// file a new order
 		$res = fileOrder($orderData);

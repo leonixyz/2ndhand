@@ -102,21 +102,30 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 
 	// send order
 	$scope.sendOrder = function() {
-		$http({
-			method: 'POST',
-			url: '/api/orders',
-			data: JSON.stringify({
-				user: $scope.user,
-				cart: $scope.cart
-			})
-		}).then(function successCallback(response) {
-			$scope.submissionMessage.title = "Success!";
-			$scope.submissionMessage.text = response.data;
-		}, function errorCallback(response) {
-			$scope.submissionMessage.title = "Error!";
-			$scope.submissionMessage.text = response.data;
-		});
-		$('#submissionModal').modal('show');
+		$('#confirm-payment-button').toggleClass('hidden');
+		$('.spinner').toggleClass('hidden');
+		setTimeout(function() {
+			$http({
+				method: 'POST',
+				url: '/api/orders',
+				data: JSON.stringify({
+					user: $scope.user,
+					cart: $scope.cart
+				})
+			}).then(function successCallback(response) {
+				$scope.submissionMessage.title = "Success!";
+				$scope.submissionMessage.text = response.data;
+				$('.spinner').toggleClass('hidden');
+				$('#submissionModal').modal('show');
+				$('#confirm-payment-button').toggleClass('hidden');
+			}, function errorCallback(response) {
+				$scope.submissionMessage.title = "Error!";
+				$scope.submissionMessage.text = response.data;
+				$('.spinner').toggleClass('hidden');
+				$('#submissionModal').modal('show');
+				$('#confirm-payment-button').toggleClass('hidden');
+			});
+		}, 5000);
 	}
 });
 
