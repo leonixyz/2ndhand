@@ -157,6 +157,7 @@ function sendEmail($to, $subject, $body){
 	$mail = getMailer();
 	$mail->addAddress($to);
 	$mail->addBCC('giulio.roman@eurac.edu');
+	$mail->addBCC('aurelia.pagano@unibz.it');
 	$mail->Subject = $subject;
 	$mail->Body = $body;
 
@@ -180,6 +181,10 @@ function sendConfirmationEmail($orderData) {
 	foreach($orderData->cart as $object) {
 		$body .= $object->amount . ' x ' . $object->item->Name . "\n";
 	}
+
+	$body .= "It will be shipped at this address:\n";
+	$body .= "{$orderData->user->address}\n{$orderData->user->zip} {$orderData->user->country}\n\n";
+	$body .= "\nIf there is something wrong with this order please answer this email.\n\n";
 	$body .= "\nBest regards\nSecond Hand Shop";
 
 	return sendEmail($to, $subject, $body);
