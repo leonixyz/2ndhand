@@ -19,7 +19,7 @@ RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get -y install apache2 php postgresql supervisor pwgen libapache2-mod-php php7.0-pgsql && \
 	sed -i "s/^display_errors = Off$/display_errors = On/" /etc/php/7.0/apache2/php.ini && \
 	sed -i "s/^display_startup_errors = Off$/display_startup_errors = On/" /etc/php/7.0/apache2/php.ini && \
-	a2enmod rewrite
+	a2enmod rewrite ssl
 
 # Add files into container
 ADD ./init.sql /init.sql

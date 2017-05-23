@@ -2,10 +2,15 @@ body {
 	font-family: 'Maven Pro', sans-serif;
 	color:#4b622b;
 	min-width: 280px;
+	overflow-x: hidden;
 }
 
 .link {
 	cursor: pointer;
+}
+
+main {
+	min-width: 20em;
 }
 
 .main-header {
