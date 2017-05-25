@@ -13,9 +13,9 @@
             <div class="col-md-6">
 				<p>{{getCurrentItem().Description}}</p>	 
 
-				<p>Price: {{getCurrentItem().Price}} &euro; </p>
-				<p>In Stock: {{getCurrentItem().Quantity}} </p>   
-				<a href="#/products" ng-click="addToCart(getCurrentItem())" class="btn btn-default btn-primary custom_button">Add to cart</a>
+				<p><strong>Price: {{getCurrentItem().Price}} &euro; </strong></p>
+				<p><strong>In Stock: {{getCurrentItem().Quantity}} </strong></p>   
+				<a href="#/products" ng-click="addToCart(getCurrentItem())" class="btn btn-default btn-primary btn-lg custom_button">Add to cart</a>
 			</div>
         </div>
 	</div>

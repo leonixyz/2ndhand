@@ -100,6 +100,7 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 			count += $scope.cart[i].amount;
 		}
 		$('#cart-counter').html(count);
+		$('#mobile-cart-counter').html(count);
 	}
 
 	// empty cart
@@ -130,6 +131,11 @@ app.controller('secondhand', function($scope, $http, $routeParams, $location) {
 				$('.spinner').toggleClass('hidden');
 				$('#submissionModal').modal('show');
 				$('#confirm-payment-button').toggleClass('hidden');
+				$scope.emptyCart();
+				$http.get('/api/products')
+					.then(function(res){
+						$scope.products = res.data;                
+				});
 			}, function errorCallback(response) {
 				$scope.submissionMessage.title = "Error!";
 				$scope.submissionMessage.text = response.data;
